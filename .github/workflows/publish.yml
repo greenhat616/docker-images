@@ -12,13 +12,18 @@ on:
 
 jobs:
   publish:
-    - uses: actions/checkout@v4
-    - name: Login to Aliyun Container Registry (ACR)
+    name: Build and test images
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[ci skip]') }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Login to Aliyun Container Registry (ACR)
+        uses: aliyun/acr-login@v1
         with:
           login-server: https://registry.cn-hangzhou.aliyuncs.com
           username: "${{ secrets.ACR_USERNAME }}"
           password: "${{ secrets.ACR_PASSWORD }}"
-    - name: Build Docker Image
-      run: docker compose build
-    - name: Publish Docker Image
-      run: docker compose push
+      - name: Build Docker Image
+        run: docker compose build
+      - name: Publish Docker Image
+        run: docker compose push
