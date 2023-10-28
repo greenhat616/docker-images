@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  nginx:
+    build:
+      context: ./services/nginx
+      args:
+        NGINX_VERSION: nginx:mainline-bookworm
+        NGINX_INSTALL_APPS: ${NGINX_INSTALL_APPS}
+    image: registry.cn-hangzhou.aliyuncs.com/a632079/nginx:latest
+  php82:
+    build:
+      context: ./services/php
+      args:
+        PHP_VERSION: chialab/php:8.2-fpm
+        PHP_EXTENSIONS: ${PHP82_EXTENSIONS}
+        TZ: "$TZ"
+        WWW_USER_UID: ${WWW_USER_UID}
+        WWW_USER_GID: ${WWW_USER_GID}
+    image: registry.cn-hangzhou.aliyuncs.com/a632079/php:8.2-fpm
+  php74:
+    build:
+      context: ./services/php
+      args:
+        PHP_VERSION: chialab/php:7.4-fpm
+        PHP_EXTENSIONS: ${PHP74_EXTENSIONS}
+        TZ: "$TZ"
+        WWW_USER_UID: ${WWW_USER_UID}
+        WWW_USER_GID: ${WWW_USER_GID}
+    image: registry.cn-hangzhou.aliyuncs.com/a632079/php:7.4-fpm
