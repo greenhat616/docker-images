@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !contains(github.event.commits[0].message, '[skip ci]') && !contains(github.event.commits[0].message, '[ci skip]') }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Login to Aliyun Container Registry (ACR)
         uses: aliyun/acr-login@v1
         with:
